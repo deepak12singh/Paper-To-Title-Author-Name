@@ -1,7 +1,7 @@
 import PyPDF2
 import google.generativeai as genai
 import json
-from confilg import *
+from DATAGETER_PROJECT.confilg import *
 import os
 from google.api_core.exceptions import ResourceExhausted
 from .countdown_timer import start_countdown
