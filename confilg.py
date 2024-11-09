@@ -1,2 +1,0 @@
-
-GENERATIVE_AI_KEY = 'Your_KEY'

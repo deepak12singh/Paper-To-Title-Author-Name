@@ -1,7 +1,7 @@
 import PyPDF2
 import google.generativeai as genai
 import json
-from DATAGETER_PROJECT.confilg import *
+from confilg import *
 import os
 from google.api_core.exceptions import ResourceExhausted
 from .countdown_timer import start_countdown
@@ -10,7 +10,7 @@ from .readingPdf import read_first_page
 # Configure the API key (replace with your actual key)
 genai.configure(api_key=GENERATIVE_AI_KEY)
 
-def data_Extrater_commond(text,file_name):
+def generate_mcq(text,file_name):
     prompt = f"""
     Extract the following information from the given data:
     Paper Title, Author Name, Email Id, Corresponding Author, Corresponding Author Email.
@@ -49,7 +49,8 @@ def data_Extrater_commond(text,file_name):
             return ""
 
     # Extract the generated content
-    return response.text.strip()
+    questions_output = response.text.strip()
+    return questions_output
 
 
 
@@ -87,7 +88,7 @@ def DataGeter(file_path):
         print(file_name, "This file is in image format or has no readable text.")
         return ''
 
-    extracted_info = data_Extrater_commond(first_page_content,file_name)
+    extracted_info = generate_mcq(first_page_content,file_name)
     data_dict = convert_to_dictionary(extracted_info)
 
     if not data_dict:
@@ -102,7 +103,7 @@ if __name__ == "__main__":
     file_name = "27.pdf"
     pdf_file_path = file_name
     first_page_content = read_first_page(pdf_file_path)
-    extracted_info = data_Extrater_commond(first_page_content)
+    extracted_info = generate_mcq(first_page_content)
     data_dict = convert_to_dictionary(extracted_info)
     data_dict["Paper_No"] = file_name.split('.')[0]
     print(data_dict)

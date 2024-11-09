@@ -25,6 +25,16 @@ def read_first_page_pymupdf(pdf_path):
         return f"PyMuPDF (fitz) failed: {e}"
 
 
+def read_first_page_pdfplumber(pdf_path):
+    import pdfplumber
+    try:
+        with pdfplumber.open(pdf_path) as pdf:
+            first_page = pdf.pages[0]
+            content = first_page.extract_text()
+            return content if content else "No text found."
+    except Exception as e:
+        return f"pdfplumber failed: {e}"
+
 
 def read_first_page_slate(pdf_path):
     import slate3k as slate
@@ -76,18 +86,6 @@ def read_first_page_pdfminer(pdf_path):
         return content if content else "No text found."
     except Exception as e:
         return f"pdfminer failed: {e}"
-
-
-
-def read_first_page_pdfplumber(pdf_path):
-    import pdfplumber
-    try:
-        with pdfplumber.open(pdf_path) as pdf:
-            first_page = pdf.pages[0]
-            content = first_page.extract_text()
-            return content if content else "No text found."
-    except Exception as e:
-        return f"pdfplumber failed: {e}"
 
 
 """
