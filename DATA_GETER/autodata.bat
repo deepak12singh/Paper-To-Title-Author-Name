@@ -13,6 +13,13 @@ if errorlevel 1 (
     exit /b 1
 )
 
+:: Check if the virtual environment folder exists
+if not exist ".\.venv\Scripts\activate" (
+    echo Virtual environment not found at .\.venv.
+    pause
+    exit /b 1
+)
+
 :: Activate the virtual environment
 call .\.venv\Scripts\activate
 if errorlevel 1 (
@@ -20,33 +27,61 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
-::echo Virtual environment activated.
 
-:: Verify python in virtual environment
-
+:: Verify if Python is available in the virtual environment
+python --version >nul 2>&1
 if errorlevel 1 (
     echo Python is not found in the virtual environment.
     pause
     exit /b 1
 )
 
-:: Check if the first argument is "here"
+:: Handle the 'here' or 'set' command
 if "%~1"=="here" (
     :: Run the Python script with CURRENT_DIR as an argument
-    ::echo Running main.py with argument %CURRENT_DIR%
     python main.py "%CURRENT_DIR%"
     if errorlevel 1 (
         echo Failed to run main.py.
         pause
-        exit /b 1
+    )
+) else if "%~1"=="set" (
+    :: Check if the second argument is 'key' and there is a third argument
+    if "%~2"=="key" (
+        if not "%~3"=="" (
+            python setupfiles\setup.py %~3
+            if errorlevel 1 (
+                echo Failed to run setup.py with key.
+                pause
+            )
+        ) else (
+            python setupfiles\help.py %*
+            
+        )
+    ) else (
+        python setupfiles\help.py %*
+        if errorlevel 1 (
+            echo Failed to run help.py.
+            
+        )
     )
 ) else (
-    echo Argument not recognized. Please use "here" as the first argument to run the script.
-    pause
-    exit /b 1
+    python setupfiles\help.py %*
+    if errorlevel 1 (
+        echo Failed to run help.py.
+        
+    )
 )
 
+:: Deactivate the virtual environment
 call deactivate
+if errorlevel 1 (
+    echo Failed to deactivate the virtual environment.
+    pause
+)
+
 :: Return to the original directory
 cd /d "%CURRENT_DIR%"
-echo Script completed successfully.
+
+:: Final message
+::echo Script completed successfully.
+::pause

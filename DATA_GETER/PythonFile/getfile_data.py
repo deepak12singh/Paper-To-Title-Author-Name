@@ -1,7 +1,7 @@
 import PyPDF2
 import google.generativeai as genai
 import json
-from confilg import *
+from config import *
 import os
 from google.api_core.exceptions import ResourceExhausted
 from .countdown_timer import start_countdown
@@ -45,6 +45,11 @@ def generate_mcq(text,file_name):
             print("Quota exhausted. Retrying after 60 seconds...",file_name)
             start_countdown(60)  # Wait for 60 seconds before retrying
         except Exception as e:
+            if 'API_KEY_INVALID' in str(e):
+                print("\n Error : API Key is invalid. Please set your API Key.")
+                print("\n     Command to set API key: autodata set key <key_value>")
+                print("\n")
+                exit()
             print(f"An error occurred: {e}")
             return ""
 
