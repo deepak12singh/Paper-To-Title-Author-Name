@@ -39,7 +39,7 @@ This project extracts metadata from research papers, such as the paper title, au
      cd C:\Users\....\Paper-To-Title-Author-Name\testing
      ```
 
-2. **Run the Command to Set Google Generative AI  API Key**:
+2. **To Set Google Generative AI  API Key**:
    - Use the following command to Set API Key:
      ```bash
      autodata set key <key_value>
