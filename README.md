@@ -14,7 +14,7 @@ This project extracts metadata from research papers, such as the paper title, au
   - `Corresponding_Author_Email`: Email of the corresponding author.
 - **Excel Export**: Outputs all extracted information into an Excel file for streamlined analysis and reporting.
 
-##Requirements
+## Requirements
 - **Python**: Version 3.8 or higher is required.
 ## Installation
 
