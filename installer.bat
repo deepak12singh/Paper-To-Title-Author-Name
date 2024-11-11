@@ -15,8 +15,14 @@ if %errorlevel% neq 0 (
     powershell -Command "Start-Process '%~f0' -Verb RunAs"
     exit /b
 )
+REM Step 1: Check Python version
+for /f "tokens=2 delims==" %%v in ('python -c "import sys; print(sys.version_info >= (3, 8))"') do set "pyver=%%v"
+if "%pyver%"=="False" (
+    echo Python 3.8 or higher is required. Please install a compatible Python version and try again.
+    exit /b
+)
 
-REM Step 1: Copy the project folder to C:\
+REM Step 2: Copy the project folder to C:\
 echo Copying project folder to %DEST%...
 xcopy /E /I /Y "%SOURCE%" "%DEST%"
 if %errorlevel% neq 0 (
@@ -24,7 +30,7 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-REM Step 2: Set environment path variable
+REM Step 3: Set environment path variable
 if exist "%SCRIPT_DIR%\set_autodata_path.py" (
     echo Adding %DEST% to PATH in registry and current session...
     python "%SCRIPT_DIR%\set_autodata_path.py" %SCRIPT_DIR_BAT%
@@ -36,10 +42,10 @@ if exist "%SCRIPT_DIR%\set_autodata_path.py" (
     echo Warning: set_autodata_path.py not found in %SCRIPT_DIR%. Skipping PATH setup.
 )
 
-REM Step 3: Change directory to the project folder
+REM Step 4: Change directory to the project folder
 cd /d %DEST%
 
-REM Step 4: Create a virtual environment if it doesn't exist
+REM Step 5: Create a virtual environment if it doesn't exist
 if not exist ".venv" (
     echo Creating virtual environment...
     python -m venv .venv
@@ -51,7 +57,7 @@ if not exist ".venv" (
     echo Virtual environment already exists.
 )
 
-REM Step 5: Activate the virtual environment and install requirements
+REM Step 6: Activate the virtual environment and install requirements
 set VENV_PATH="%DEST%\.venv\Scripts\activate.bat"
 if exist %VENV_PATH% (
     echo Activating virtual environment...
