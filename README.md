@@ -14,6 +14,8 @@ This project extracts metadata from research papers, such as the paper title, au
   - `Corresponding_Author_Email`: Email of the corresponding author.
 - **Excel Export**: Outputs all extracted information into an Excel file for streamlined analysis and reporting.
 
+##Requirements
+- **Python**: Version 3.8 or higher is required.
 ## Installation
 
 1. **Clone the Repository**:
@@ -34,10 +36,15 @@ This project extracts metadata from research papers, such as the paper title, au
 1. **Navigate to the Folder Containing Your Files**:
    - Go to the directory where your PDF and DOCX files are located. For example:
      ```bash
-     cd C:\Users\Sachin_Singh\Desktop\AdityaSir\Paper-To-Title-Author-Name\testing
+     cd C:\Users\....\Paper-To-Title-Author-Name\testing
      ```
 
-2. **Run the Command to Start Data Extraction**:
+2. **Run the Command to Set Google Generative AI  API Key**:
+   - Use the following command to Set API Key:
+     ```bash
+     autodata set key <key_value>
+     ```
+3. **Run the Command to Start Data Extraction**:
    - Use the following command to start the data extraction process:
      ```bash
      autodata here
