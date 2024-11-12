@@ -33,7 +33,7 @@ if %errorlevel% neq 0 (
 REM Step 3: Set environment path variable
 if exist "%SCRIPT_DIR%\set_autodata_path.py" (
     echo Adding %DEST% to PATH in registry and current session...
-    python "%SCRIPT_DIR%\set_autodata_path.py" %SCRIPT_DIR_BAT%
+    python "%SCRIPT_DIR%\set_autodata_path.py" "%SCRIPT_DIR_BAT%"
     if %errorlevel% neq 0 (
         echo Error: Failed to set PATH. Please check set_autodata_path.py.
         exit /b

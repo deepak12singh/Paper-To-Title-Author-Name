@@ -89,7 +89,7 @@ def add_to_path(directory):
 
 clean_path()
 
-directory = sys.argv[1]
+directory = (sys.argv[1].split('"')[0])
 
 file_name = os.path.join(directory,"installer.bat")
 print(file_name)
